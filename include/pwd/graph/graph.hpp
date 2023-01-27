@@ -155,6 +155,75 @@ public:
      */
     pwd::Node* Root();
 
+
+    /**
+     * @brief       Add a node to this tree-graph.
+     * 
+     * @details     This method adds a node to this tree-graph.\n 
+     *              If the tree-graph contains no node, the newly added node will be the
+     *              root.\n 
+     *              The newly added node is completely disconnected from the rest of the
+     *              graph.
+     * 
+     * @param Head      The head of the node.
+     * @param Tail      The tail of the node.
+     * @param Radius    The radius of the node.
+     * @param Mass      The mass of the node.
+     * @param IsOnLeaf  If this node is on a leaf area or not.
+     */
+    void AddNode(const Eigen::Vector3d& Head,
+                 const Eigen::Vector3d& Tail,
+                 double Radius,
+                 double Mass,
+                 bool IsOnLeaf);
+
+    /**
+     * @brief       Creates a connection between two nodes.
+     * 
+     * @details     This method creates a connection in the tree-graph between the node
+     *              with ID <code>ID1</code> and the node with ID <code>ID2</code>.\n 
+     *              If one of the IDs does not belong to the tree-graph, the method
+     *              throws a pwd::AssertFailException.
+     * 
+     * @param ID1   The ID of the first node.
+     * @param ID2   The ID of the second node.
+     * 
+     * @throws pwd::AssertFailException if ID1 or ID2 are not valid node IDs.
+     */
+    void AddConnection(int ID1,int ID2);
+
+    /**
+     * @brief       Remove a node from the tree-graph.
+     * 
+     * @details     This method removes a node from the tree and recompute the 
+     *              connections.\n 
+     *              Removing a node forces the recomputation of heads and tails.\n 
+     *              If the node does not belong to the tree, the method throws a
+     *              pwd::AssertFailException.
+     * 
+     * @param ID    The ID of the node to remove.
+     * 
+     * @throws pwd::AssertFailException if ID is not a valid node ID.
+     */
+    void RemoveNode(int ID);
+
+    /**
+     * @brief       Removes a connection from the tree-graph.
+     * 
+     * @details     This method removes from the tree-graph the connection between the
+     *              nodes with IDs <code>ID1</code> and <code>ID2</code>.\n
+     *              Removing a connection <b>does not</b> force the recomputation of
+     *              heads and tails.\n 
+     *              If one between the two nodes does not belong to the tree, the
+     *              method throws a pwd::AssertFailException.
+     * 
+     * @param ID1   The ID of the first node.
+     * @param ID2   The ID of the second node.
+     * 
+     * @throws pwd::AssertFailException if ID1 or ID2 are not valid node IDs.
+     */
+    void RemoveConnection(int ID1, int ID2);
+
     
 
 
@@ -167,7 +236,17 @@ public:
      */
     void ResetIDs();
 
-    
+
+    /**
+     * @brief       Recompute head and tails of each node.
+     * 
+     * @details     This method recomputes head and tail of each node in the tree-graph.\n 
+     *              The head and tail recomputation occurs under the assumption that each
+     *              node segment is connected to its neighbour.
+     */
+    void RecomputeHeadsAndTails();
+
+
 };
 
 } // namespace pwd
