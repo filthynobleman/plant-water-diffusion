@@ -32,12 +32,14 @@ set(HPP_FILES   "${CMAKE_SOURCE_DIR}/include/pwd/common/includes.hpp"
                 "${CMAKE_SOURCE_DIR}/include/pwd/utils/stack.hpp"
                 "${CMAKE_SOURCE_DIR}/include/pwd/graph/node.hpp"
                 "${CMAKE_SOURCE_DIR}/include/pwd/graph/graph.hpp"
+                "${CMAKE_SOURCE_DIR}/include/pwd/watermodel.hpp"
                 "${CMAKE_SOURCE_DIR}/include/pwd/pwd.hpp")
 set(CPP_FILES   "${CMAKE_SOURCE_DIR}/src/common/baseexception.cpp"
                 "${CMAKE_SOURCE_DIR}/src/common/nullexception.cpp"
                 "${CMAKE_SOURCE_DIR}/src/common/assertexception.cpp"
                 "${CMAKE_SOURCE_DIR}/src/graph/node.cpp"
-                "${CMAKE_SOURCE_DIR}/src/graph/graph.cpp")
+                "${CMAKE_SOURCE_DIR}/src/graph/graph.cpp"
+                "${CMAKE_SOURCE_DIR}/src/watermodel/watermodel.cpp")
 
 # Create the library
 add_library(pwd SHARED  ${CPP_FILES})

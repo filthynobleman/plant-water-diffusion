@@ -77,13 +77,11 @@ private:
      * @param Head      The head of the node.
      * @param Tail      The tail of the node.
      * @param Radius    The radius of the node.
-     * @param Mass      The mass of the node.
      * @param IsOnLeaf  If this node is on a leaf area or not.
      */
     void AddNode(const Eigen::Vector3d& Head,
                  const Eigen::Vector3d& Tail,
                  double Radius,
-                 double Mass,
                  bool IsOnLeaf);
 
     /**

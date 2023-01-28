@@ -17,15 +17,13 @@ pwd::Node::Node(const pwd::Graph* Graph,
                 const Eigen::Vector3d& Head,
                 const Eigen::Vector3d& Tail,
                 double Radius,
-                double Mass,
                 bool IsOnLeaf)
     : m_Graph(Graph), m_Head(Head), m_Tail(Tail),
-      m_Radius(Radius), m_Mass(Mass), m_IsOnLeaf(IsOnLeaf)
+      m_Radius(Radius), m_IsOnLeaf(IsOnLeaf)
 {
     CheckNull(Graph);
     Assert((Tail - Head).norm() > 1e-16);
     Assert(Radius > 0);
-    Assert(Mass > 0);
 }
 
 
@@ -50,13 +48,11 @@ Eigen::Quaterniond pwd::Node::Rotation() const
 }
 
 double pwd::Node::Radius() const { return m_Radius; }
-double pwd::Node::Mass() const { return m_Mass; }
 bool pwd::Node::IsOnLeaf() const { return m_IsOnLeaf; }
 
 double pwd::Node::Length() const { return Direction().norm(); }
 double pwd::Node::Area() const { return Length() * Radius(); }
 double pwd::Node::Volume() const { return M_PI * Radius() * Radius() * Length(); }
-double pwd::Node::Density() const { return m_Mass / Volume(); }
 
 int pwd::Node::Degree() const { return m_Adj.size(); }
 const pwd::Node* pwd::Node::GetAdjacent(int i) const

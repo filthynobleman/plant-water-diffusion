@@ -42,7 +42,7 @@ void ui::ModelProperties::Draw()
     ImGui::InputFloat3("Model Position", (float*)&NewPos);
     if (m_Transform->GetPosition() != NewPos)
         m_Updated = true;
-    ImGui::InputFloat3("Model Position", (float*)&NewRot);
+    ImGui::InputFloat3("Model Rotation", (float*)&NewRot);
     if (m_Transform->GetEulerAngle() != NewRot)
         m_Updated = true;
     ImGui::InputFloat("Model Scale", &NewScale);

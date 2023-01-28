@@ -62,13 +62,6 @@ private:
     double m_Radius;
 
     /**
-     * @brief       The mass of this node.
-     * 
-     * @details     This is the mass of the cylinder represented by this node.
-     */
-    double m_Mass;
-
-    /**
      * @brief       Determine if this node belongs to a leaf or not.
      * 
      * @details     This value determines if this node belongs to a leaf zone or not.
@@ -102,7 +95,6 @@ private:
      * @param Head      The head of the node.
      * @param Tail      The tail of the node.
      * @param Radius    The radius of the node.
-     * @param Mass      The mass of the node.
      * @param IsOnLeaf  Determine if this node is on a leaf area.
      * 
      * @throws pwd::NullPointerException if the graph is null.
@@ -112,7 +104,6 @@ private:
          const Eigen::Vector3d& Head,
          const Eigen::Vector3d& Tail,
          double Radius,
-         double Mass,
          bool IsOnLeaf);
 
     /**
@@ -203,15 +194,6 @@ public:
     double Radius() const;
 
     /**
-     * @brief       The mass of this node.
-     * 
-     * @details     This method returns the mass of this node.
-     * 
-     * @return double the mass of this node.
-     */
-    double Mass() const;
-
-    /**
      * @brief       Determine if this node is on a leaf area.
      * 
      * @details     Determine if this node is on a leaf area.
@@ -261,19 +243,6 @@ public:
      * @return double the volume of this node.
      */
     double Volume() const;
-
-    /**
-     * @brief       The density of this node.
-     * 
-     * @details     This method returns the density of the cylinder represented by this
-     *              node. Namely
-     *              \code {.cpp}
-     *                  Mass() / Volume()
-     *              \endcode
-     * 
-     * @return double the density of the node.
-     */
-    double Density() const;
 
 
 

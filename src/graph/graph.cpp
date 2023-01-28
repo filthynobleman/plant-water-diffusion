@@ -59,10 +59,9 @@ pwd::Node* pwd::Graph::Root() { return m_Root; }
 void pwd::Graph::AddNode(const Eigen::Vector3d& Head,
                          const Eigen::Vector3d& Tail,
                          double Radius,
-                         double Mass,
                          bool IsOnLeaf)
 {
-    pwd::Node* NewNode = new pwd::Node(this, Head, Tail, Radius, Mass, IsOnLeaf);
+    pwd::Node* NewNode = new pwd::Node(this, Head, Tail, Radius, IsOnLeaf);
     m_IDs.insert({ NewNode, m_Nodes.size() });
     m_Nodes.push_back(NewNode);
     if (NumNodes() == 1)
@@ -151,7 +150,7 @@ pwd::Graph::Graph(const std::string& Filename)
                                    &on_leaf);
         Assert(NumReads == 6);
 
-        AddNode(Eigen::Vector3d(0.0, 0.0, 0.0), 1e2 * dir, 1e2 * rad, 1, on_leaf != 0);
+        AddNode(Eigen::Vector3d(0.0, 0.0, 0.0), 1e2 * dir, 1e2 * rad, on_leaf != 0);
         double NDir2 = dir.squaredNorm();
         if (NDir2 < OrigDist)
         {
