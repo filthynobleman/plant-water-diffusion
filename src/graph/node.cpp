@@ -69,7 +69,8 @@ void pwd::Node::AddAdjacent(const pwd::Node* N)
 {
     CheckNull(N);
     Assert(N->Graph() == m_Graph);
-    m_Adj.push_back(N);
+    if (std::find(m_Adj.begin(), m_Adj.end(), N) == m_Adj.end())
+        m_Adj.push_back(N);
 }
 void pwd::Node::RemoveAdjacent(const pwd::Node* N)
 {

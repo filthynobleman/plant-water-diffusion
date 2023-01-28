@@ -308,7 +308,8 @@ public:
      *              If the given node is nullptr, the method throws a
      *              pwd::NullPointerException.\n 
      *              If the node belongs to another tree-graph, the method throws a
-     *              pwd::AssertFailException.
+     *              pwd::AssertFailException.\n 
+     *              If the node is already adjacent to this node, the method does nothing.
      * 
      * @param N     The node to add to the adjacency list.
      * 

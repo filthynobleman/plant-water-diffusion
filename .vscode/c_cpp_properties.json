@@ -7,7 +7,10 @@
                 "${workspaceFolder}/ext/eigen",
                 "${workspaceFolder}/ext/glad/include",
                 "${workspaceFolder}/ext/glfw/include",
-                "${workspaceFolder}/ext/glm/include"
+                "${workspaceFolder}/ext/glm/include",
+                "${workspaceFolder}/ext/stb/include",
+                "${workspaceFolder}/ext/imgui",
+                "${workspaceFolder}/ext/imgui/backends"
             ],
             "defines": [
                 "_DEBUG",
