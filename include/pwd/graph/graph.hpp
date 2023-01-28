@@ -235,9 +235,13 @@ public:
      * 
      * @details     This method recomputes head and tail of each node in the tree-graph.\n 
      *              The head and tail recomputation occurs under the assumption that each
-     *              node segment is connected to its neighbour.
+     *              node segment is connected to its neighbour.\n 
+     *              If the parameter <code>KeepTail</code> is set to true, the tail is
+     *              not recomputed.
+     * 
+     * @param KeepTail  Decide wheter or not to recompute the tail.
      */
-    void RecomputeHeadsAndTails();
+    void RecomputeHeadsAndTails(bool KeepTail = true);
 };
 
 } // namespace pwd

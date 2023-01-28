@@ -43,6 +43,7 @@ std::vector<const pwd::Node*> pwd::Graph::GetNodes() const
 {
     std::vector<const pwd::Node*> Copy;
     Copy.insert(Copy.begin(), m_Nodes.begin(), m_Nodes.end());
+    return Copy;
 }
 const std::vector<pwd::Node*>& pwd::Graph::GetNodes()
 {
@@ -76,7 +77,7 @@ void pwd::Graph::AddConnection(int ID1, int ID2)
     Assert(ID1 < NumNodes());
     Assert(ID2 >= 0);
     Assert(ID2 < NumNodes());
-    Assert(ID1 == ID2);
+    Assert(ID1 != ID2);
 
     m_Nodes[ID1]->AddAdjacent(m_Nodes[ID2]);
     m_Nodes[ID2]->AddAdjacent(m_Nodes[ID1]);
@@ -85,8 +86,12 @@ void pwd::Graph::AddConnection(int ID1, int ID2)
 
 
 
-void pwd::Graph::RecomputeHeadsAndTails()
+void pwd::Graph::RecomputeHeadsAndTails(bool KeepTail)
 {
+    std::unordered_map<const pwd::Node*, bool> Visited;
+    for (const pwd::Node* N : m_Nodes)
+        Visited.insert({ N, false });
+
     pwd::Queue<pwd::Node*> Queue;
     Queue.Enqueue(m_Root);
     while(!Queue.IsEmpty())
@@ -94,13 +99,18 @@ void pwd::Graph::RecomputeHeadsAndTails()
         pwd::Node* N = Queue.Dequeue();
         for (const pwd::Node* _Ch : N->m_Adj)
         {
+            if (Visited.at(_Ch))
+                continue;
+
             pwd::Node* Ch = GetNode(GetNodeID(_Ch));
             Eigen::Vector3d D = Ch->Direction();
             Ch->m_Head = N->m_Tail;
-            Ch->m_Tail = Ch->m_Head + D;
+            if (!KeepTail)
+                Ch->m_Tail = N->m_Tail + D;
 
             Queue.Enqueue(Ch);
         }
+        Visited.at(N) = true;
     }
 }
 
@@ -134,14 +144,14 @@ pwd::Graph::Graph(const std::string& Filename)
     {
         std::getline(Stream, Line);
         int NumReads = std::sscanf(Line.c_str(), 
-                                   "%d,%lf,%lf,%lf,%ld,%d", 
+                                   "%d,%lf,%lf,%lf,%lf,%d", 
                                    &id,
                                    &(dir[0]), &(dir[1]), &(dir[2]),
                                    &rad,
                                    &on_leaf);
         Assert(NumReads == 6);
 
-        AddNode(Eigen::Vector3d(0.0, 0.0, 0.0), dir, rad, 1, on_leaf != 0);
+        AddNode(Eigen::Vector3d(0.0, 0.0, 0.0), 1e2 * dir, 1e2 * rad, 1, on_leaf != 0);
         double NDir2 = dir.squaredNorm();
         if (NDir2 < OrigDist)
         {

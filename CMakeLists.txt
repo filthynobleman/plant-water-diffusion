@@ -128,7 +128,7 @@ if (BUILD_SAMPLES)
     
     add_executable(TestGraph "${CMAKE_SOURCE_DIR}/src/samples/test_graph.cpp")
     target_compile_features(TestGraph PRIVATE cxx_std_17)
-    target_link_libraries(TestGraph pwd)
+    target_link_libraries(TestGraph pwd GLAD STB ${glfw3} IMGUI OpenGL::GL UI Rendering MeshIO)
 endif()
 
 

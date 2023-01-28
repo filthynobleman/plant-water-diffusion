@@ -27,14 +27,13 @@ namespace ui
 class ModelProperties : public UIComponent
 {
 private:
-    float m_CurScale;
     bool m_Updated;
     render::Material m_Material;
-    render::Model* m_Model;
+    render::Transform* m_Transform;
 
 public:
     ModelProperties(const std::string& Name, 
-                    render::Model* Model,
+                    render::Transform* Transform,
                     unsigned int PosX,
                     unsigned int PosY,
                     unsigned int SizeX,

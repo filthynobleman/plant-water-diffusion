@@ -33,7 +33,7 @@ const render::Light& ui::LightProperties::GetLight() const { return m_Light; }
 void ui::LightProperties::Draw()
 {
     ImGui::InputFloat3("Position", (float*)(&(m_Light.Position)));
-    ImGui::InputFloat3("Ambient", (float*)(&(m_Light.Ambient)));
-    ImGui::InputFloat3("Diffuse", (float*)(&(m_Light.Diffuse)));
-    ImGui::InputFloat3("Specular", (float*)(&(m_Light.Specular)));
+    ImGui::ColorEdit3("Ambient", (float*)(&(m_Light.Ambient)));
+    ImGui::ColorEdit3("Diffuse", (float*)(&(m_Light.Diffuse)));
+    ImGui::ColorEdit3("Specular", (float*)(&(m_Light.Specular)));
 }
