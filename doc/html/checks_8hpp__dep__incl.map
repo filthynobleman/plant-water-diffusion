@@ -1,0 +1,12 @@
+<map id="include/pwd/common/checks.hpp" name="include/pwd/common/checks.hpp">
+<area shape="rect" id="node1" title="Macros providing fast checks." alt="" coords="130,5,291,47"/>
+<area shape="rect" id="node2" href="$common_8hpp.html" title="Include common headers." alt="" coords="130,184,291,225"/>
+<area shape="rect" id="node10" href="$memory_8hpp.html" title="Functions for fast memory handling." alt="" coords="190,95,351,136"/>
+<area shape="rect" id="node3" href="$graph_8hpp.html" title="Declaration of a graph data structure." alt="" coords="32,348,243,375"/>
+<area shape="rect" id="node4" href="$pwd_8hpp.html" title="Entry point of the project." alt="" coords="127,497,286,524"/>
+<area shape="rect" id="node5" href="$watermodel_8hpp.html" title="Declaration of the water diffusion model." alt="" coords="173,423,384,449"/>
+<area shape="rect" id="node6" href="$node_8hpp.html" title="Declaration of a data structure represeting a graph nodes." alt="" coords="39,273,244,300"/>
+<area shape="rect" id="node7" href="$queue_8hpp.html" title="Definition of a basic queue data structure." alt="" coords="319,273,523,300"/>
+<area shape="rect" id="node9" href="$stack_8hpp.html" title=" " alt="" coords="547,273,746,300"/>
+<area shape="rect" id="node8" href="$utils_8hpp.html" title="Utilities header." alt="" coords="325,348,517,375"/>
+</map>

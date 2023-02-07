@@ -1,0 +1,11 @@
+<map id="include/pwd/common/memory.hpp" name="include/pwd/common/memory.hpp">
+<area shape="rect" id="node1" title="Functions for fast memory handling." alt="" coords="130,5,291,47"/>
+<area shape="rect" id="node2" href="$common_8hpp.html" title="Include common headers." alt="" coords="130,95,291,136"/>
+<area shape="rect" id="node3" href="$graph_8hpp.html" title="Declaration of a graph data structure." alt="" coords="32,259,243,285"/>
+<area shape="rect" id="node4" href="$pwd_8hpp.html" title="Entry point of the project." alt="" coords="127,408,286,435"/>
+<area shape="rect" id="node5" href="$watermodel_8hpp.html" title="Declaration of the water diffusion model." alt="" coords="173,333,384,360"/>
+<area shape="rect" id="node6" href="$node_8hpp.html" title="Declaration of a data structure represeting a graph nodes." alt="" coords="39,184,244,211"/>
+<area shape="rect" id="node7" href="$queue_8hpp.html" title="Definition of a basic queue data structure." alt="" coords="319,184,523,211"/>
+<area shape="rect" id="node9" href="$stack_8hpp.html" title=" " alt="" coords="547,184,746,211"/>
+<area shape="rect" id="node8" href="$utils_8hpp.html" title="Utilities header." alt="" coords="325,259,517,285"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="pwd::BaseException" name="pwd::BaseException">
+<area shape="rect" id="node1" title="Base class for custom exceptions in this project." alt="" coords="127,5,281,32"/>
+<area shape="rect" id="node2" href="$classpwd_1_1AssertFailException.html" title="Exception to be called when an assertion fails." alt="" coords="5,80,189,107"/>
+<area shape="rect" id="node3" href="$classpwd_1_1NullPointerException.html" title="Exception to be called when null pointers are found." alt="" coords="214,80,407,107"/>
+</map>

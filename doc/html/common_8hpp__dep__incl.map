@@ -1,0 +1,10 @@
+<map id="include/pwd/common/common.hpp" name="include/pwd/common/common.hpp">
+<area shape="rect" id="node1" title="Include common headers." alt="" coords="130,5,291,47"/>
+<area shape="rect" id="node2" href="$graph_8hpp.html" title="Declaration of a graph data structure." alt="" coords="32,169,243,196"/>
+<area shape="rect" id="node3" href="$pwd_8hpp.html" title="Entry point of the project." alt="" coords="127,319,286,345"/>
+<area shape="rect" id="node4" href="$watermodel_8hpp.html" title="Declaration of the water diffusion model." alt="" coords="173,244,384,271"/>
+<area shape="rect" id="node5" href="$node_8hpp.html" title="Declaration of a data structure represeting a graph nodes." alt="" coords="39,95,244,121"/>
+<area shape="rect" id="node6" href="$queue_8hpp.html" title="Definition of a basic queue data structure." alt="" coords="319,95,523,121"/>
+<area shape="rect" id="node8" href="$stack_8hpp.html" title=" " alt="" coords="547,95,746,121"/>
+<area shape="rect" id="node7" href="$utils_8hpp.html" title="Utilities header." alt="" coords="325,169,517,196"/>
+</map>
