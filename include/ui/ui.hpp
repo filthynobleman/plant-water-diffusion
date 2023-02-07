@@ -17,3 +17,5 @@
 #include <ui/lightprop.hpp>
 #include <ui/simopts.hpp>
 #include <ui/camprop.hpp>
+#include <ui/colmapprop.hpp>
+#include <ui/wmodprop.hpp>

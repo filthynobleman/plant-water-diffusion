@@ -50,9 +50,9 @@ void ui::ModelProperties::Draw()
         m_Updated = true;
 
     ImGui::Text("Material");
-    ImGui::ColorEdit3("Ambient", (float*)(&(m_Material.Ambient)));
-    ImGui::ColorEdit3("Diffuse", (float*)(&(m_Material.Diffuse)));
-    ImGui::ColorEdit3("Specular", (float*)(&(m_Material.Specular)));
+    ImGui::ColorEdit3("Ambient", (float*)(&(m_Material.Ambient)), ImGuiColorEditFlags_PickerHueWheel);
+    ImGui::ColorEdit3("Diffuse", (float*)(&(m_Material.Diffuse)), ImGuiColorEditFlags_PickerHueWheel);
+    ImGui::ColorEdit3("Specular", (float*)(&(m_Material.Specular)), ImGuiColorEditFlags_PickerHueWheel);
     ImGui::InputFloat("Shininess", &(m_Material.Shininess));
 
     if (m_Updated)

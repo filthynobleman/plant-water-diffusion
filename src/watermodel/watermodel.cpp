@@ -96,7 +96,7 @@ void pwd::WaterModel::Evaluate(double Time)
     Eigen::VectorXcd Xi = m_InvEvecs * m_Water0;
     for (int i = 0; i < Xi.size(); ++i)
         Xi[i] *= std::exp(m_Evals[i] * m_LastTime);
-    m_Water = (m_Evals * Xi).real();
+    m_Water = (m_Evecs * Xi).real();
 }
 
 double pwd::WaterModel::LastEvaluationTime() const { return m_LastTime; }
@@ -182,7 +182,7 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
         {
             int j = m_Graph->GetNodeID(N->GetAdjacent(ch));
             // If the connection is dead, ignore it
-            if (DEMap.find({ i, j }) == DEMap.end())
+            if (DEMap.find({ i, j }) != DEMap.end())
                 continue;
             // Otherwise, compute the average flow resistance and add it to the matrix
             double FResLoc = 0.5 * (FlowRes[i] + FlowRes[j]);

@@ -117,7 +117,9 @@ if (BUILD_SAMPLES)
                             "${CMAKE_SOURCE_DIR}/src/ui/modprop.cpp"
                             "${CMAKE_SOURCE_DIR}/src/ui/lightprop.cpp"
                             "${CMAKE_SOURCE_DIR}/src/ui/simopts.cpp"
-                            "${CMAKE_SOURCE_DIR}/src/ui/camprop.cpp")
+                            "${CMAKE_SOURCE_DIR}/src/ui/camprop.cpp"
+                            "${CMAKE_SOURCE_DIR}/src/ui/colmapprop.cpp"
+                            "${CMAKE_SOURCE_DIR}/src/ui/wmodprop.cpp")
 
     # Compile test applications
     add_executable(TestCommons "${CMAKE_SOURCE_DIR}/src/samples/test_commons.cpp")
@@ -131,6 +133,10 @@ if (BUILD_SAMPLES)
     add_executable(TestGraph "${CMAKE_SOURCE_DIR}/src/samples/test_graph.cpp")
     target_compile_features(TestGraph PRIVATE cxx_std_17)
     target_link_libraries(TestGraph pwd GLAD STB ${glfw3} IMGUI OpenGL::GL UI Rendering MeshIO)
+    
+    add_executable(TestWaterModel "${CMAKE_SOURCE_DIR}/src/samples/test_water_model.cpp")
+    target_compile_features(TestWaterModel PRIVATE cxx_std_17)
+    target_link_libraries(TestWaterModel pwd GLAD STB ${glfw3} IMGUI OpenGL::GL UI Rendering MeshIO)
 endif()
 
 

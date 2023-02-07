@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\build\CMakeFiles\a5f4954fdad742802089d464427b1e6a\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{5C549A76-0592-3471-BA53-59FDB9C9D92A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

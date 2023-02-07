@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\vertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\src\rendering\window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Filippo\Documents\workspace\plant-water-diffusion\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{70D83344-BED6-3F6D-8442-2A76F80C5DDB}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
