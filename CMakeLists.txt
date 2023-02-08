@@ -50,11 +50,12 @@ target_compile_features(pwd PRIVATE cxx_std_17)
 option(BUILD_SAMPLES "Build sample applications for testing." ON)
 
 # Install
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/pwd"
+        DESTINATION "${CMAKE_INSTALL_PREFIX}/pwd/include")
 install(TARGETS pwd
         LIBRARY DESTINATION "${CMAKE_INSTALL_PREFIX}/pwd/lib"
         ARCHIVE DESTINATION "${CMAKE_INSTALL_PREFIX}/pwd/lib"
-        RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/pwd/bin"
-        PUBLIC_HEADER DESTINATION "${CMAKE_INSTALL_PREFIX}/pwd/include/pwd")
+        RUNTIME DESTINATION "${CMAKE_INSTALL_PREFIX}/pwd/bin")
 
 
 if (BUILD_SAMPLES)
