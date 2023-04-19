@@ -210,14 +210,14 @@ void pwd::WaterModel::Build()
     EigSolver.compute(m_S);
     m_Evals = EigSolver.eigenvalues();
     m_Evecs = EigSolver.eigenvectors();
-    m_InvEvecs = m_Evecs.inverse();
-    m_Xi = m_InvEvecs * m_Water0;
+    // m_InvEvecs = m_Evecs.inverse();
+    // m_Xi = m_InvEvecs * m_Water0;
+    m_Xi2 = m_Water0;
+    m_Xi = m_Evecs.colPivHouseholderQr().solve(m_Xi2);
     m_Xi2 = m_Xi;
-    Eigen::MatrixXcd Diff = m_S - (m_Evecs * m_Evals.asDiagonal() * m_InvEvecs);
     End = std::chrono::system_clock::now();
     std::chrono::system_clock::duration ElapsTimeChrono = End - Start;
     unsigned long long ElapsTime;
     ElapsTime = std::chrono::duration_cast<std::chrono::microseconds>(ElapsTimeChrono).count();
     std::cout << "Elapsed time:        " << (ElapsTime / 1.0e6) << " seconds" << std::endl;
-    std::cout << "Decomposition error: " << Diff.cwiseAbs2().sum() << std::endl;
 }

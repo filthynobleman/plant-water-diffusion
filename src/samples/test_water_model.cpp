@@ -93,7 +93,10 @@ int main(int argc, char const *argv[])
         TotTime += TimerStop();
         NumFrames += 1;
         if (WModProp.IsReset())
+        {
             WaterModel.Initialize(WModProp.GetLossRate(), WModProp.GetInitialWater());
+            WaterModel.Build();
+        }
         
         if (Window.KeyPressed(GLFW_KEY_SPACE))
             WModProp.Pause();
