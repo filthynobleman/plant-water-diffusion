@@ -15,6 +15,9 @@
 #include <io/io.hpp>
 
 
+void TimerStart();
+double TimerStop();
+
 int main(int argc, char const *argv[])
 {
     if (argc < 2)
@@ -72,7 +75,10 @@ int main(int argc, char const *argv[])
 
 
     pwd::WaterModel WaterModel(Graph, WModProp.GetLossRate(), WModProp.GetInitialWater());
+    WaterModel.Build();
     double TotWater0 = WaterModel.Water0().maxCoeff();
+    size_t NumFrames = 0;
+    double TotTime = 0.0;
     while (!Window.ShouldClose())
     {
         Window.PollEvents();
@@ -82,7 +88,10 @@ int main(int argc, char const *argv[])
         if (Window.KeyDown(GLFW_KEY_ESCAPE)) 
             Window.Close();
 
+        TimerStart();
         WaterModel.Evaluate(WModProp.GetTime());
+        TotTime += TimerStop();
+        NumFrames += 1;
         if (WModProp.IsReset())
             WaterModel.Initialize(WModProp.GetLossRate(), WModProp.GetInitialWater());
         
@@ -158,5 +167,25 @@ int main(int argc, char const *argv[])
         Window.SwapBuffers();
     }
 
+    std::cout << "Average time per frame is " << (TotTime / NumFrames) << " ms." << std::endl;
+
     return 0;
+}
+
+
+
+
+
+std::chrono::system_clock::time_point Start;
+void TimerStart()
+{
+    Start = std::chrono::system_clock::now();
+}
+double TimerStop()
+{
+    std::chrono::system_clock::time_point End;
+    End = std::chrono::system_clock::now();
+    std::chrono::system_clock::duration ETA = End - Start;
+    size_t us = std::chrono::duration_cast<std::chrono::microseconds>(ETA).count();
+    return 1.0e-3 * us;
 }

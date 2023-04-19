@@ -59,6 +59,29 @@ private:
     Eigen::VectorXd m_Water;
 
     /**
+     * @brief       Inverse of eigenvectors times the water.
+     * 
+     * @details     This vector contains the inverse of the eigenvector matrix,
+     *              multiplied by the initial water amount.\n 
+     *              Used to speed up the computation.
+     */
+    Eigen::VectorXcd m_Xi;
+
+    /**
+     * @brief       Support vector.
+     * 
+     * @details     This is a support vector for intermediate operations.
+     */
+    Eigen::VectorXcd m_Xi2;
+
+    /**
+     * @brief       System matrix.
+     * 
+     * @details     The system matrix of this model.
+     */
+    Eigen::MatrixXd m_S;
+
+    /**
      * @brief       The eigenvectors of the system matrix.
      * 
      * @details     The eigenvectors of the system matrix.
@@ -293,6 +316,14 @@ public:
     void Initialize(const Eigen::VectorXd& LossRates,
                     double InitialWater, 
                     const std::vector<std::pair<int, int>>& DeadEdges);
+
+    
+    /**
+     * @brief       Build the water model.
+     * 
+     * @details     This method builds the system matrix of the water model.
+     */
+    void Build();
 };
 
 } // namespace pwd

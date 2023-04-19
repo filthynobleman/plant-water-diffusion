@@ -93,10 +93,9 @@ void pwd::WaterModel::Evaluate(double Time)
     Assert(Time >= 0.0);
 
     m_LastTime = Time;
-    Eigen::VectorXcd Xi = m_InvEvecs * m_Water0;
-    for (int i = 0; i < Xi.size(); ++i)
-        Xi[i] *= std::exp(m_Evals[i] * m_LastTime);
-    m_Water = (m_Evecs * Xi).real();
+    for (int i = 0; i < m_Xi2.size(); ++i)
+        m_Xi2[i] = m_Xi[i] * std::exp(m_Evals[i] * m_LastTime);
+    m_Water = (m_Evecs * m_Xi2).real();
 }
 
 double pwd::WaterModel::LastEvaluationTime() const { return m_LastTime; }
@@ -169,7 +168,7 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
     m_Water0 *= InitialWater / m_Water0.sum();
     m_Water = m_Water0;
 
-
+    
     // Create the adjacency matrix with inverse of water flows
     Eigen::MatrixXd Adj;
     Adj.resize(m_Graph->NumNodes(), m_Graph->NumNodes());
@@ -195,20 +194,26 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
     }
 
     // Compute the system matrix
-    Eigen::MatrixXd S = Adj * (PRESS_CONST * Volumes).cwiseInverse().asDiagonal();
-    S -= Eigen::SparseMatrix<double>(LossRates.cwiseProduct(Areas).asDiagonal());
+    m_S = Adj * (PRESS_CONST * Volumes).cwiseInverse().asDiagonal();
+    m_S -= Eigen::SparseMatrix<double>(LossRates.cwiseProduct(Areas).asDiagonal());
+}
 
+
+void pwd::WaterModel::Build()
+{
     // Compute the eigendecomposition
-    std::cout << "Generated ODE system has " << S.cols() << " variables." << std::endl;
+    std::cout << "Generated ODE system has " << m_S.cols() << " variables." << std::endl;
     std::cout << "Solving the eigendecomposition..." << std::endl;
     std::chrono::system_clock::time_point Start, End;
     Start = std::chrono::system_clock::now();
     Eigen::EigenSolver<Eigen::MatrixXd> EigSolver;
-    EigSolver.compute(S);
+    EigSolver.compute(m_S);
     m_Evals = EigSolver.eigenvalues();
     m_Evecs = EigSolver.eigenvectors();
     m_InvEvecs = m_Evecs.inverse();
-    Eigen::MatrixXcd Diff = S - (m_Evecs * m_Evals.asDiagonal() * m_InvEvecs);
+    m_Xi = m_InvEvecs * m_Water0;
+    m_Xi2 = m_Xi;
+    Eigen::MatrixXcd Diff = m_S - (m_Evecs * m_Evals.asDiagonal() * m_InvEvecs);
     End = std::chrono::system_clock::now();
     std::chrono::system_clock::duration ElapsTimeChrono = End - Start;
     unsigned long long ElapsTime;
