@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
     ui::ModelProperties ModProps("Graph Properties", &GraphTrans, 0, 130, 430, 360);
     ui::LightProperties LightProps("Light Properties", 0, 130 + 360, 430, 217);
     ui::ColormapProperties CMapProps("Colormap", 0, 130 + 360 + 217, 430, 400);
-    ui::WaterModelProperties WModProp("Water Model", 0, 130 + 360 + 217 + 400, 430, 220);
+    ui::WaterModelProperties WModProp("Water Model", Window.Width() - 430, 0, 430, 220);
     UIManager.AttachComponent(ModProps);
     UIManager.AttachComponent(LightProps);
     UIManager.AttachComponent(CamProps);
@@ -75,7 +75,7 @@ int main(int argc, char const *argv[])
 
 
     pwd::WaterModel WaterModel(Graph, WModProp.GetLossRate(), WModProp.GetInitialWater());
-    WaterModel.Build();
+    // WaterModel.Build();
     double TotWater0 = WaterModel.Water0().maxCoeff();
     size_t NumFrames = 0;
     double TotTime = 0.0;
@@ -90,12 +90,15 @@ int main(int argc, char const *argv[])
 
         TimerStart();
         WaterModel.Evaluate(WModProp.GetTime());
-        TotTime += TimerStop();
-        NumFrames += 1;
+        if (!WModProp.IsPaused())
+        {
+            TotTime += TimerStop();
+            NumFrames += 1;
+        }
         if (WModProp.IsReset())
         {
             WaterModel.Initialize(WModProp.GetLossRate(), WModProp.GetInitialWater());
-            WaterModel.Build();
+            // WaterModel.Build();
         }
         
         if (Window.KeyPressed(GLFW_KEY_SPACE))

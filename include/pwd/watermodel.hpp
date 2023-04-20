@@ -79,7 +79,10 @@ private:
      * 
      * @details     The system matrix of this model.
      */
-    Eigen::MatrixXd m_S;
+    Eigen::SparseMatrix<double> m_S;
+
+    Eigen::MatrixXd m_V;
+    Eigen::MatrixXd m_H;
 
     /**
      * @brief       The eigenvectors of the system matrix.
@@ -108,6 +111,14 @@ private:
      * @details     This is the last time point at which the system has been evaluated.
      */
     double m_LastTime;
+
+    /**
+     * @brief       Spectral decomposition computed during the building process.
+     * 
+     * @details     This boolean value determines if the spectral decomposition of the
+     *              system matrix has been computed during the building process.
+     */
+    bool m_Spectral;
 
     
 
@@ -258,7 +269,7 @@ public:
      *              If the given time point is less than zero, the method throws a
      *              pwd::AssertFailException.
      * 
-     * @param Time  The evaluation time.
+     * @param Time      The evaluation time.
      * 
      * @throws pwd::AssertFailException if <code>Time < 0.0</code>.
      */

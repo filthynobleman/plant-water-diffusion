@@ -88,9 +88,62 @@ double pwd::WaterModel::Water0(int i) const { return m_Water0[i]; }
 const Eigen::VectorXd& pwd::WaterModel::Water() const { return m_Water; }
 double pwd::WaterModel::Water(int i) const { return m_Water[i]; }
 
+double Arnoldi(const Eigen::SparseMatrix<double>& A, 
+               const Eigen::VectorXd& v, 
+               int m,
+               Eigen::MatrixXd& V,
+               Eigen::MatrixXd& H)
+{
+    V.resize(v.rows(), m);
+    H.resize(m, m);
+    double beta = v.norm();
+    V.col(0) = v / beta;
+    Eigen::VectorXd p;
+    for (int j = 0; j < m - 1; ++j)
+    {
+        p = A * V.col(j);
+        for (int i = 0; i < j; ++i)
+        {
+            H(i, j) = V.col(i).dot(p);
+            p -= H(i, j) * V.col(i);
+        }
+        H(j + 1, j) = p.norm();
+        V.col(j + 1) = p / H(j + 1, j);
+    }
+
+    return beta;
+}
+
 void pwd::WaterModel::Evaluate(double Time)
 {
     Assert(Time >= 0.0);
+
+    if (!m_Spectral)
+    {
+        double dt = Time - m_LastTime;
+        if (dt < 1e-7)
+            return;
+        double beta = Arnoldi(m_S, m_Water, m_Graph->NumNodes() / 25, m_V, m_H);
+        m_H *= dt;
+        std::cout << m_V.rows() << 'x' << m_V.cols() << std::endl;
+        std::cout << m_H.rows() << 'x' << m_H.cols() << std::endl;
+        Eigen::EigenSolver<Eigen::MatrixXd> EigSolver;
+        EigSolver.compute(m_H);
+        if (EigSolver.info() != Eigen::ComputationInfo::Success)
+            std::cerr << "Errors occurred in computing the eigendecomposition." << std::endl;
+        m_Evecs = EigSolver.eigenvectors();
+        m_InvEvecs = m_Evecs.inverse();
+        m_Evals = EigSolver.eigenvalues();
+        for (int i = 0; i < m_Evals.rows(); ++i)
+            m_Evals[i] = std::exp(m_Evals[i]);
+        std::cout << m_Evals.rows() << 'x' << m_Evals.cols() << std::endl;
+        std::cout << m_Evecs.rows() << 'x' << m_Evecs.cols() << std::endl;
+        m_H = (m_Evecs * (Eigen::SparseMatrix<std::complex<double>>(m_Evals.asDiagonal()) * m_InvEvecs)).real();
+        m_Water = (beta * (m_V * m_H)).col(0);
+        
+
+        return;
+    }
 
     m_LastTime = Time;
     for (int i = 0; i < m_Xi2.size(); ++i)
@@ -170,9 +223,11 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
 
     
     // Create the adjacency matrix with inverse of water flows
-    Eigen::MatrixXd Adj;
+    Eigen::SparseMatrix<double> Adj;
     Adj.resize(m_Graph->NumNodes(), m_Graph->NumNodes());
     Adj.setZero();
+    std::vector<Eigen::Triplet<double>> FResTrips;
+    FResTrips.reserve(m_Graph->NumNodes() * 3);
     for (int i = 0; i < m_Graph->NumNodes(); ++i)
     {
         const pwd::Node* N = m_Graph->GetNode(i);
@@ -186,28 +241,36 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
             // Otherwise, compute the average flow resistance and add it to the matrix
             double FResLoc = 0.5 * (FlowRes[i] + FlowRes[j]);
             FResLoc = 1.0 / FResLoc;
-            Adj(i, j) = FResLoc;
+            // Adj(i, j) = FResLoc;
+            FResTrips.emplace_back(i, j, FResLoc);
             FRes += FResLoc;
         }
         if (FRes > 0.0)
-            Adj(i, i) = -FRes;
+            // Adj(i, i) = -FRes;
+            FResTrips.emplace_back(i, i, -FRes);
     }
+    Adj.setFromTriplets(FResTrips.begin(), FResTrips.end());
 
     // Compute the system matrix
     m_S = Adj * (PRESS_CONST * Volumes).cwiseInverse().asDiagonal();
     m_S -= Eigen::SparseMatrix<double>(LossRates.cwiseProduct(Areas).asDiagonal());
+
+    m_Spectral = false;
 }
 
 
 void pwd::WaterModel::Build()
 {
+    m_Spectral = true;
+
     // Compute the eigendecomposition
     std::cout << "Generated ODE system has " << m_S.cols() << " variables." << std::endl;
     std::cout << "Solving the eigendecomposition..." << std::endl;
     std::chrono::system_clock::time_point Start, End;
     Start = std::chrono::system_clock::now();
+    Eigen::MatrixXd Sys = m_S.toDense();
     Eigen::EigenSolver<Eigen::MatrixXd> EigSolver;
-    EigSolver.compute(m_S);
+    EigSolver.compute(Sys);
     m_Evals = EigSolver.eigenvalues();
     m_Evecs = EigSolver.eigenvectors();
     // m_InvEvecs = m_Evecs.inverse();
