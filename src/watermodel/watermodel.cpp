@@ -96,19 +96,28 @@ double Arnoldi(const Eigen::SparseMatrix<double>& A,
 {
     V.resize(v.rows(), m);
     H.resize(m, m);
+    V.setZero();
+    H.setZero();
     double beta = v.norm();
-    V.col(0) = v / beta;
-    Eigen::VectorXd p;
-    for (int j = 0; j < m - 1; ++j)
+    if (beta < 1e-7)
     {
-        p = A * V.col(j);
+        return 0.0;
+    }
+    V.col(0) = v / beta;
+    H(0, 0) = beta;
+    Eigen::VectorXd p;
+    for (int j = 1; j < m - 1; ++j)
+    {
+        p = A * V.col(j - 1);
         for (int i = 0; i < j; ++i)
         {
-            H(i, j) = V.col(i).dot(p);
-            p -= H(i, j) * V.col(i);
+            H(i, j - 1) = V.col(i).dot(p);
+            p -= H(i, j - 1) * V.col(i);
         }
-        H(j + 1, j) = p.norm();
-        V.col(j + 1) = p / H(j + 1, j);
+        H(j, j) = p.norm();
+        if (H(j, j) < 1e-7)
+            return beta;
+        V.col(j) = p / H(j, j);
     }
 
     return beta;
@@ -123,10 +132,12 @@ void pwd::WaterModel::Evaluate(double Time)
         double dt = Time - m_LastTime;
         if (dt < 1e-7)
             return;
-        double beta = Arnoldi(m_S, m_Water, m_Graph->NumNodes() / 25, m_V, m_H);
+        double beta = Arnoldi(m_S, m_Water, std::min(25, m_Graph->NumNodes()), m_V, m_H);
         m_H *= dt;
-        std::cout << m_V.rows() << 'x' << m_V.cols() << std::endl;
-        std::cout << m_H.rows() << 'x' << m_H.cols() << std::endl;
+        if (m_H.unaryExpr([](double v) { return std::isinf(v); }).any())
+            std::cerr << "Infinities found." << std::endl;
+        if (m_H.unaryExpr([](double v) { return std::isnan(v); }).any())
+            std::cerr << "NaNs found." << std::endl;
         Eigen::EigenSolver<Eigen::MatrixXd> EigSolver;
         EigSolver.compute(m_H);
         if (EigSolver.info() != Eigen::ComputationInfo::Success)
@@ -136,10 +147,7 @@ void pwd::WaterModel::Evaluate(double Time)
         m_Evals = EigSolver.eigenvalues();
         for (int i = 0; i < m_Evals.rows(); ++i)
             m_Evals[i] = std::exp(m_Evals[i]);
-        std::cout << m_Evals.rows() << 'x' << m_Evals.cols() << std::endl;
-        std::cout << m_Evecs.rows() << 'x' << m_Evecs.cols() << std::endl;
-        m_H = (m_Evecs * (Eigen::SparseMatrix<std::complex<double>>(m_Evals.asDiagonal()) * m_InvEvecs)).real();
-        m_Water = (beta * (m_V * m_H)).col(0);
+        m_Water = (beta * (m_V * (m_Evecs * (m_Evals.asDiagonal() * m_InvEvecs))).real()).col(0);
         
 
         return;

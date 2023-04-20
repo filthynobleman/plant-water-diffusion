@@ -29,6 +29,7 @@ private:
     double m_LossRate;
     double m_Time;
     double m_TimeStep;
+    bool m_Exact;
     bool m_IsPaused;
     bool m_IsReset;
 
@@ -47,6 +48,7 @@ public:
     double GetLossRate() const;
     double GetTime() const;
     double GetTimeStep() const;
+    bool IsExact() const;
     bool IsPaused() const;
     bool IsReset() const;
 

@@ -22,6 +22,9 @@ ui::WaterModelProperties::WaterModelProperties(const std::string& Name,
     m_LossRate = 3e-1;
     m_Time = 0.0;
     m_TimeStep = 0.1;
+    m_Exact = false;
+    m_IsPaused = true;
+    m_IsReset = true;
 }
 
 ui::WaterModelProperties::~WaterModelProperties() { }
@@ -31,6 +34,7 @@ double ui::WaterModelProperties::GetInitialWater() const { return m_InitialWater
 double ui::WaterModelProperties::GetLossRate() const { return m_LossRate; }
 double ui::WaterModelProperties::GetTime() const { return m_Time; }
 double ui::WaterModelProperties::GetTimeStep() const { return m_TimeStep; }
+bool ui::WaterModelProperties::IsExact() const { return m_Exact; }
 bool ui::WaterModelProperties::IsPaused() const { return m_IsPaused; }
 bool ui::WaterModelProperties::IsReset() const { return m_IsReset; }
 
@@ -43,6 +47,7 @@ void ui::WaterModelProperties::Draw()
     ImGui::InputDouble("Loss Rate", &m_LossRate);
     ImGui::InputDouble("Time Step", &m_TimeStep);
     ImGui::InputDouble("Time", &m_Time);
+    ImGui::Checkbox("Exact Solution", &m_Exact);
     ImGui::Checkbox("Paused", &m_IsPaused);
     m_IsReset = ImGui::Button("Reset");
     if (m_IsReset)

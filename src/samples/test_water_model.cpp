@@ -66,7 +66,7 @@ int main(int argc, char const *argv[])
     ui::ModelProperties ModProps("Graph Properties", &GraphTrans, 0, 130, 430, 360);
     ui::LightProperties LightProps("Light Properties", 0, 130 + 360, 430, 217);
     ui::ColormapProperties CMapProps("Colormap", 0, 130 + 360 + 217, 430, 400);
-    ui::WaterModelProperties WModProp("Water Model", Window.Width() - 430, 0, 430, 220);
+    ui::WaterModelProperties WModProp("Water Model", Window.Width() - 430, 0, 430, 250);
     UIManager.AttachComponent(ModProps);
     UIManager.AttachComponent(LightProps);
     UIManager.AttachComponent(CamProps);
@@ -98,7 +98,8 @@ int main(int argc, char const *argv[])
         if (WModProp.IsReset())
         {
             WaterModel.Initialize(WModProp.GetLossRate(), WModProp.GetInitialWater());
-            // WaterModel.Build();
+            if (WModProp.IsExact())
+                WaterModel.Build();
         }
         
         if (Window.KeyPressed(GLFW_KEY_SPACE))
