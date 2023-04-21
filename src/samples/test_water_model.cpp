@@ -88,10 +88,10 @@ int main(int argc, char const *argv[])
         if (Window.KeyDown(GLFW_KEY_ESCAPE)) 
             Window.Close();
 
-        TimerStart();
-        WaterModel.Evaluate(WModProp.GetTime());
         if (!WModProp.IsPaused())
         {
+            TimerStart();
+            WaterModel.Evaluate(WModProp.GetTime());
             TotTime += TimerStop();
             NumFrames += 1;
         }

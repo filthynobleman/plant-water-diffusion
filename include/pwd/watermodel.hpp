@@ -81,8 +81,9 @@ private:
      */
     Eigen::SparseMatrix<double> m_S;
 
-    Eigen::MatrixXd m_V;
-    Eigen::MatrixXd m_H;
+    Eigen::SparseMatrix<double> m_Eye;
+    Eigen::VectorXd m_RK[4];
+    Eigen::Matrix<double, Eigen::Dynamic, 6> m_Spt;
 
     /**
      * @brief       The eigenvectors of the system matrix.
