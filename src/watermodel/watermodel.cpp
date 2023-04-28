@@ -144,6 +144,7 @@ void pwd::WaterModel::Evaluate(double Time)
 
         m_Water = Solver.solve(m_Spt * VBeta);
 
+        m_LastTime = Time;
         return;
     }
 
