@@ -269,6 +269,7 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
     m_Spt.setZero();
 
     m_Spectral = false;
+    m_LastTime = 0.0;
 }
 
 
