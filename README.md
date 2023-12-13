@@ -1,6 +1,9 @@
 # Plant Water Diffusion
 This repository contains the implementation of the water diffusion model, as described
-in...  
+in the paper _A Physically-inspired Approach to the Simulation of Plant Wilting_.  
+
+- DOI: https://dl.acm.org/doi/10.1145/3610548.3618218
+- PDF: http://computationalsciences.org/publications/maggioli-2023-plant-wilting/maggioli-2023-plant-wilting.pdf
 
 
 ## Building instructions
