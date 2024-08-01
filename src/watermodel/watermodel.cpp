@@ -243,7 +243,6 @@ void pwd::WaterModel::Initialize(const Eigen::VectorXd& LossRates,
                 continue;
             // Otherwise, compute the average flow resistance and add it to the matrix
             double FResLoc = 0.5 * (FlowRes[i] + FlowRes[j]);
-            FResLoc = 1.0 / FResLoc;
             // Adj(i, j) = FResLoc;
             FResTrips.emplace_back(i, j, FResLoc);
             FRes += FResLoc;
